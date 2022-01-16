@@ -1,11 +1,68 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace RhythmsGonnaGetYou
 {
     class Program
     {
-        static string Menu()
+        static void AddBand()
+        {
+            Console.Clear();
+            var context = new RhythmsContext();
+            Band newBand = new Band();
+
+            Console.Write("\nType the name of new band then hit ENTER: ");
+            newBand.Name = Console.ReadLine();
+            Console.Write("\nType the new bands country of origin then hit ENTER: ");
+            newBand.CountryOfOrigin = Console.ReadLine();
+            Console.Write("\nType the new bands number of members then hit ENTER: ");
+            newBand.NumberOfMembers = int.Parse(Console.ReadLine());
+            Console.Write("\nType the new bands website then hit ENTER: ");
+            newBand.Website = Console.ReadLine();
+            Console.Write("\nType the new bands style/genre then hit ENTER: ");
+            newBand.Style = Console.ReadLine();
+            Console.Write("\nIf the band is signed, type 'true' then press ENTER\nor\nIf the band isn't signed, type false then press ENTER: ");
+            var isSignedInput = Console.ReadLine().ToLower();
+            newBand.IsSigned = bool.Parse(isSignedInput);
+            Console.Write("\nType the Primary contacts name then hit ENTER: ");
+            newBand.ContactName = Console.ReadLine();
+            Console.Write("\nType the Primary contacts phone number then hit ENTER: ");
+            newBand.ContactPhoneNumber = Console.ReadLine();
+
+            context.Bands.Add(newBand);
+            context.SaveChanges();
+
+
+        }
+
+        static string PromptForString(string prompt)
+        {
+            Console.WriteLine(prompt);
+            var userInput = Console.ReadLine();
+            return userInput;
+        }
+
+        static int PromptForInteger(string prompt)
+        {
+            var userInput = PromptForString(prompt);
+
+            int inputAsInteger;
+            var isThisGoodInput = int.TryParse(userInput, out inputAsInteger);
+
+            if (isThisGoodInput)
+            {
+                return inputAsInteger;
+            }
+            else
+            {
+                Console.WriteLine("That isn't an integer. You get a 0");
+                return 0;
+            }
+        }
+
+
+        static string ShowMenu()
         {
             Console.WriteLine("\n\n");
             Console.WriteLine("********************************************************\n");
@@ -29,20 +86,34 @@ namespace RhythmsGonnaGetYou
 
         }
 
+
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
         static void Main(string[] args)
         {
+
+
             var context = new RhythmsContext();
+
             var bandCount = context.Bands.Count();
+            Console.WriteLine($" There are {bandCount} bands in database!");
+            var albumCount = context.Albums.Count();
+            Console.WriteLine($" There are {albumCount} albums in database!");
+            var songCount = context.Songs.Count();
+            Console.WriteLine($" There are {songCount} songs in database!");
+
+
 
             var keepGoing = true;
 
             while (keepGoing)
             {
-                var menuSelection = Menu();
+                var menuSelection = ShowMenu();
                 switch (menuSelection)
                 {
                     case "1":
-                        // Add new band method
+                        AddBand();
                         break;
                     case "2":
                         // View all bands method
