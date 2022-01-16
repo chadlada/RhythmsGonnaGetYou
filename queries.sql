@@ -113,34 +113,30 @@ UPDATE "Songs" SET "AlbumId" = 6 WHERE "Id" IN (6);
 UPDATE "Songs" SET "AlbumId" = 7 WHERE "Id" IN (7);
 
 -- Let a band go (update isSigned to false)
+update "Bands"
+set "IsSigned" = 'false'
+where "Name" = 'Cream';
+
 -- Resign a band (update isSigned to true)
+update "Bands"
+set "IsSigned" = 'true'
+where "Name" = 'Cream';
+
 -- Prompt for a band name and view all their albums
+SELECT "Albums"."Title" FROM "Albums" 
+JOIN "Bands" ON "Albums"."Id" = "Bands"."Id" 
+WHERE "Bands"."Name" = 'Dave Matthews Band';
+
+
+
 -- View all albums ordered by ReleaseDate
+Select * From "Albums"
+ordered by "ReleaseDate";
+
 -- View all bands that are signed
+Select * From "Bands"
+Where "IsSigned" = 'true';
+
 -- View all bands that are not signed
--- Quit the program
-
-    -- * Album
-    --     * Id
-    --     * Title
-    --     * IsExplicit
-    --     * ReleaseDate
-    -- * Band
-    --     * Id
-    --     * Name
-    --     * CountryOfOrigin
-    --     * NumberOfMembers
-    --     * Website
-    --     * Style
-    --     * IsSigned
-    --     * ContactName
-    --     * ContactPhoneNumber
-    -- * Song
-    --     * Id
-    --     * Track Number
-    --     * Title
-    --     * Duration
-
-
-
-        -- INSERT INTO "Bands" ("Name", "CountryOfOrigin", "NumberOfMembers", "Website", "Style", "IsSigned", "ContactName", "ContactPhoneNumber") VALUES ('Elton John', 'United States', 1, 'eltonjohn.com', 'Rock', Yes, 'Ricky Martin', 800-321-9000);
+Select * From "Bands"
+Where "IsSigned" = 'false';
