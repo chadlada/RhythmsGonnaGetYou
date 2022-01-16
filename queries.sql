@@ -72,6 +72,8 @@ Values ('Led Zeppelin', 'England', 4, 'wwww.LedZeppelin.com', 'rock', 'true', 'B
 Insert Into "Bands" ("Name", "CountryOfOrigin", "NumberOfMembers", "Website", "Style", "IsSigned","ContactName", "ContactPhoneNumber")
 Values ('Cream', 'England', 4, 'wwww.cream.com', 'rock', 'true', 'Donald Irving', '476-243-6978');
 
+
+
 Insert Into "Songs" ("TrackNumber", "Title", "duration")
 Values (3,'Crash Into Me', '5:28');
 Insert Into "Songs" ("TrackNumber", "Title", "duration")
@@ -93,6 +95,8 @@ Insert Into "Albums" ("Title", "IsExplicit", "ReleaseDate")
 Values ('Grafitti', 'false', '1969-04-09');
 Insert Into "Albums" ("Title", "IsExplicit", "ReleaseDate")
 Values ('Creamy', 'false', '1966-05-26');
+
+
 
 
 
