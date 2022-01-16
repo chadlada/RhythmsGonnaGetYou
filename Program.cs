@@ -6,6 +6,8 @@ namespace RhythmsGonnaGetYou
 {
     class Program
     {
+                // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Menu Option Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
         static void AddBand()
         {
             Console.Clear();
@@ -36,13 +38,80 @@ namespace RhythmsGonnaGetYou
 
         static void AddAlbum()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
+            Album newAlbum = new Album();
 
+            Console.Write("Type the title of the new album, then press ENTER: ");
+            newAlbum.Title = Console.ReadLine();
+
+            Console.Write("\nIf the album is explicit, type 'true' then hit ENTER\nor\nIf the album is NOT explicit, type 'false' then hit ENTER: ");
+            var isExplicitInput = Console.ReadLine().ToLower();
+            newAlbum.IsExplicit = bool.Parse(isExplicitInput);
+
+            Console.Write("\nType the release date of new album in the following format (2000-06-15) then press ENTER: ");
+            var newAlbumReleaseDate = Console.ReadLine();
+            newAlbum.ReleaseDate = DateTime.Parse(newAlbumReleaseDate);
+
+            var selectingBand = true;
+            var bandForAlbum = new Band();
+            while (selectingBand)
+            {
+                Console.WriteLine("Select a band to assign the album to, then press ENTER: ");
+                var bandSelection = Console.ReadLine();
+                if (context.Bands.FirstOrDefault(band => band.Name == bandSelection) != null)
+                {
+                    bandForAlbum = context.Bands.FirstOrDefault(band => band.Name == bandSelection);
+                    selectingBand = false;
+                }
+                else
+                {
+                    Console.WriteLine("\nThere is no band by that name in database");
+                    Console.WriteLine("\nPlease Try Again");
+                }
+            }
+            Console.WriteLine($"\n{newAlbum.Title} assigned to {bandForAlbum.Name}");
+            newAlbum.BandId = bandForAlbum.Id;
+            context.Albums.Add(newAlbum);
+            context.SaveChanges();
+            Console.WriteLine("\nAdded to database\n\n");
+            Console.WriteLine("\nPress ENTER to quit to menu: ");
+            var quitToMenu = Console.ReadLine();
+            Console.Clear();
         }
 
-        static void AddSong()
+        static void LetBandGo()
         {
 
         }
+        static void ReSignBand()
+        {
+
+        }
+        static void ViewAllBands()
+        {
+
+        }
+        static void ViewAllAlbumsFromBand()
+        {
+
+        }
+        static void ViewAllAlbumsByReleaseDate()
+        {
+
+        }
+        static void ViewAllBandsSigned()
+        {
+
+        }
+        static void ViewAllBandsNotSigned()
+        {
+
+        }
+
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Menu Option Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 
         static string PromptForString(string prompt)
         {
@@ -68,6 +137,7 @@ namespace RhythmsGonnaGetYou
                 return 0;
             }
         }
+
 
 
         static string ShowMenu()
@@ -129,7 +199,7 @@ namespace RhythmsGonnaGetYou
                         AddBand();
                         break;
                     case "2":
-                        // Add an album for a band
+                        AddAlbum();
                         break;
                     case "3":
                         // Add a song to album 
