@@ -32,7 +32,15 @@ namespace RhythmsGonnaGetYou
 
             context.Bands.Add(newBand);
             context.SaveChanges();
+        }
 
+        static void AddAlbum()
+        {
+
+        }
+
+        static void AddSong()
+        {
 
         }
 
@@ -110,6 +118,7 @@ namespace RhythmsGonnaGetYou
 
 
             var keepGoing = true;
+            var counter = 0;
 
             while (keepGoing)
             {
@@ -120,10 +129,10 @@ namespace RhythmsGonnaGetYou
                         AddBand();
                         break;
                     case "2":
-                        // View all bands method
+                        // Add an album for a band
                         break;
                     case "3":
-                        // Add a song to album method
+                        // Add a song to album 
                         break;
                     case "4":
                         //Let a band go
@@ -132,24 +141,40 @@ namespace RhythmsGonnaGetYou
                         // Resign a band
                         break;
                     case "6":
-                        // View all albums from a band
+                        // View all bands
                         break;
                     case "7":
-                        // View all albums by release date
+                        // View all albums by a band
                         break;
                     case "8":
-                        // View all bands that are signed
+                        // View all albums by release date
                         break;
                     case "9":
-                        // View all bands that are not signed
+                        // View all bands that are signed
+                        break;
+                    case "10":
+                        // View all bands that are NOT signed
                         break;
                     case "Q":
                         keepGoing = false;
                         break;
+
+                    default:
+                        Console.Clear();
+                        counter += 1;
+                        if (counter > 3)
+                        {
+                            Console.WriteLine("Exceeded Attempts..Closing App\n");
+                            keepGoing = false;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Select an option, then hit ENTER\n");
+                        }
+                        break;
                 }
-
             }
-
         }
     }
 }
