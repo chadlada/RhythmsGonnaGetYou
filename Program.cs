@@ -70,15 +70,19 @@ namespace RhythmsGonnaGetYou
             Console.WriteLine("********************-Menu-******************************\n");
 
             Console.WriteLine("Please choose one of the following options\n");
+            Console.WriteLine("\n***********-ADD-***********");
             Console.WriteLine("[1] Add a new band");
-            Console.WriteLine("[2] View All bands");
+            Console.WriteLine("[2] Add an album for a band");
             Console.WriteLine("[3] Add a song to an album");
+            Console.WriteLine("\n******-SIGNED STATUS-******");
             Console.WriteLine("[4] Let a band go");
             Console.WriteLine("[5] Resign a band");
-            Console.WriteLine("[6] View all albums from a band");
-            Console.WriteLine("[7] View all albums by release date");
-            Console.WriteLine("[8] View all bands that are signed");
-            Console.WriteLine("[9] View all bands that are not signed");
+            Console.WriteLine("\n*************-VIEW-***************");
+            Console.WriteLine("[6] View All bands");
+            Console.WriteLine("[7] View all albums from a band");
+            Console.WriteLine("[8] View all albums by release date");
+            Console.WriteLine("[9] View all bands that are signed");
+            Console.WriteLine("[10] View all bands that are not signed\n");
             Console.WriteLine("[Q] Quit program");
 
             var choice = Console.ReadLine().ToUpper();
