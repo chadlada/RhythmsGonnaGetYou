@@ -1,12 +1,30 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Pastel;
 
 namespace RhythmsGonnaGetYou
 {
     class Program
     {
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Menu Option Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        static void Greeting()
+        {
+            Console.WriteLine("   ######  #     # #     # ####### #     # #     # ");
+            Console.WriteLine("   #     # #     #  #   #     #    #     # ##   ## ");
+            Console.WriteLine("   #     # #     #   # #      #    #     # # # # # ");
+            Console.WriteLine("   ######  #######    #       #    ####### #  #  # ");
+            Console.WriteLine("   #   #   #     #    #       #    #     # #     # ");
+            Console.WriteLine("   #    #  #     #    #       #    #     # #     # ");
+            Console.WriteLine("   #     # #     #    #       #    #     # #     # ");
+            Console.WriteLine("   ################################################");
+        }
+
+
+
+
+
 
         static void AddBand()
         {
@@ -157,12 +175,53 @@ namespace RhythmsGonnaGetYou
 
         static void ReSignBand()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
+            var selectingBand = true;
+            var selectedBandToReSign = new Band();
 
+            while (selectingBand)
+            {
+                Console.Write("Select a band to sign. Type name, then press ENTER: ");
+                var bandSelection = Console.ReadLine();
+                if (context.Bands.FirstOrDefault(band => band.Name == bandSelection) != null)
+                {
+                    selectedBandToReSign = context.Bands.FirstOrDefault(band => band.Name == bandSelection);
+                    selectingBand = false;
+                }
+                else
+                {
+                    Console.WriteLine("\nThere is no band by that name in database");
+                    Console.WriteLine("\nPlease Try Again");
+                }
+            }
+            selectedBandToReSign.IsSigned = true;
+            Console.WriteLine("\nBand added to label");
+            context.SaveChanges();
+            Console.WriteLine("\nChanges saved to database");
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            var quitToMenu = Console.ReadLine();
+            Console.Clear();
         }
+
         static void ViewAllBands()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
+            Console.WriteLine("\nViewing all bands:");
 
+            foreach (var band in context.Bands)
+            {
+                Console.WriteLine($"{band.Name} ");
+            }
+            var bandCount = context.Bands.Count();
+            Console.WriteLine($"\n\n#######--There are {bandCount} bands in database!--#######");
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+
+            Console.ReadLine();
+            Console.Clear();
         }
+
         static void ViewAllAlbumsFromBand()
         {
 
@@ -213,12 +272,14 @@ namespace RhythmsGonnaGetYou
 
         static string ShowMenu()
         {
-            Console.WriteLine("\n\n");
-            Console.WriteLine("********************************************************\n");
-            Console.WriteLine("          Welcome to Rhythm Records\n\n");
-            Console.WriteLine("********************-Menu-******************************\n");
+            // Console.WriteLine("\n");
+            Console.WriteLine("   ************************************************\n");
+            Console.WriteLine($"{"            WELCOME TO RHYTHM RECORDS".Pastel(Color.FromArgb(165, 229, 250))}\n");
 
-            Console.WriteLine("Please choose one of the following options\n");
+            // Console.WriteLine("             Welcome to Rhythm Records\n\n");
+            Console.WriteLine("   ********************-Menu-**********************\n");
+
+            Console.WriteLine("      Please choose one of the following options\n");
             Console.WriteLine("\n***********-ADD-***********");
             Console.WriteLine("[1] Add a new band");
             Console.WriteLine("[2] Add an album for a band");
@@ -254,8 +315,7 @@ namespace RhythmsGonnaGetYou
             var albumCount = context.Albums.Count();
             Console.WriteLine($" There are {albumCount} albums in database!");
             var songCount = context.Songs.Count();
-            Console.WriteLine($" There are {songCount} songs in database!");
-
+            Console.WriteLine($" There are {songCount} songs in database!\n\n");
 
 
             var keepGoing = true;
@@ -263,6 +323,7 @@ namespace RhythmsGonnaGetYou
 
             while (keepGoing)
             {
+                Greeting();
                 var menuSelection = ShowMenu();
                 switch (menuSelection)
                 {
@@ -279,10 +340,10 @@ namespace RhythmsGonnaGetYou
                         LetBandGo();
                         break;
                     case "5":
-                        // Resign a band
+                        ReSignBand();
                         break;
                     case "6":
-                        // View all bands
+                        ViewAllBands();
                         break;
                     case "7":
                         // View all albums by a band
