@@ -6,7 +6,7 @@ namespace RhythmsGonnaGetYou
 {
     class Program
     {
-                // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Menu Option Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Menu Option Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         static void AddBand()
         {
@@ -75,15 +75,86 @@ namespace RhythmsGonnaGetYou
             context.Albums.Add(newAlbum);
             context.SaveChanges();
             Console.WriteLine("\nAdded to database\n\n");
-            Console.WriteLine("\nPress ENTER to quit to menu: ");
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
             var quitToMenu = Console.ReadLine();
             Console.Clear();
         }
 
-        static void LetBandGo()
+        static void AddSongToAlbum()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
+            Song newSong = new Song();
+
+            Console.Write("Type the title of the new song, then press ENTER: ");
+            newSong.Title = Console.ReadLine();
+            Console.Write("Type the track number of new song, then press ENTER: ");
+            var newSongTrackNumber = Console.ReadLine();
+            newSong.TrackNumber = int.Parse(newSongTrackNumber);
+            Console.Write("Type the duration of the new song, (Format: 00:02:45), then press ENTER: ");
+            // var newSongDuration = Console.ReadLine();
+            newSong.duration = Console.ReadLine();
+
+            var selectingAlbum = true;
+            var albumForSong = new Album();
+            while (selectingAlbum)
+            {
+                Console.Write("\nSelect an album to add new song to, then press ENTER: ");
+                var albumSelection = Console.ReadLine();
+                if (context.Albums.FirstOrDefault(album => album.Title == albumSelection) != null)
+                {
+                    albumForSong = context.Albums.FirstOrDefault(album => album.Title == albumSelection);
+                    selectingAlbum = false;
+                }
+                else
+                {
+                    Console.WriteLine("\nThere is no album by that name in database");
+                    Console.WriteLine("\nPlease Try Again");
+                }
+            }
+            Console.WriteLine($"\n{newSong.Title} assigned to {albumForSong.Title}");
+            newSong.AlbumId = albumForSong.Id;
+            context.Songs.Add(newSong);
+            context.SaveChanges();
+            Console.WriteLine("\nAdded to database\n\n");
+            Console.WriteLine("Press ENTER to quit and return to main menu.\n");
+            var quitToMenu = Console.ReadLine();
+            Console.Clear();
 
         }
+
+        static void LetBandGo()
+        {
+            Console.Clear();
+            var context = new RhythmsContext();
+            var selectingBand = true;
+            var selectedBandToLetGo = new Band();
+
+            while (selectingBand)
+            {
+                Console.Write("Select a band to let go. Type name, then press ENTER: ");
+                var bandSelection = Console.ReadLine();
+                if (context.Bands.FirstOrDefault(band => band.Name == bandSelection) != null)
+                {
+                    selectedBandToLetGo = context.Bands.FirstOrDefault(band => band.Name == bandSelection);
+                    selectingBand = false;
+                }
+                else
+                {
+                    Console.WriteLine("\nThere is no band by that name in database");
+                    Console.WriteLine("\nPlease Try Again");
+                }
+            }
+            selectedBandToLetGo.IsSigned = false;
+            Console.WriteLine("\nBand no longer signed to label");
+            context.SaveChanges();
+            Console.WriteLine("\nChanges saved to database");
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            var quitToMenu = Console.ReadLine();
+            Console.Clear();
+        }
+
+
         static void ReSignBand()
         {
 
@@ -202,10 +273,10 @@ namespace RhythmsGonnaGetYou
                         AddAlbum();
                         break;
                     case "3":
-                        // Add a song to album 
+                        AddSongToAlbum();
                         break;
                     case "4":
-                        //Let a band go
+                        LetBandGo();
                         break;
                     case "5":
                         // Resign a band
