@@ -10,6 +10,6 @@ namespace RhythmsGonnaGetYou
         public DateTime ReleaseDate { get; set; }
         public int BandId { get; set; }
 
-
+        public Band Band { get; set; }
     }
 }

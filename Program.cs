@@ -224,12 +224,42 @@ namespace RhythmsGonnaGetYou
 
         static void ViewAllAlbumsFromBand()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
+            Console.WriteLine("");
+            Console.WriteLine("Viewing albums from specified band");
+            Console.WriteLine("");
 
+            var whatband = PromptForString("What band would you like to see albums from?");
+            var albumsFromBand = context.Bands.FirstOrDefault(band => band.Name == whatband);
+            var albumName = context.Albums.Include(album => album.Band).Where(album => album.Band == albumsFromBand);
+
+            foreach (var album in albumName)
+            {
+                Console.WriteLine(album.Title);
+            }
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            Console.ReadLine();
+            Console.Clear();
         }
+
+
+
         static void ViewAllAlbumsByReleaseDate()
         {
-
+            Console.Clear();
+            var context = new RhythmsContext();
+            Console.WriteLine("\nViewing all albums by release date: ");
+            var albumsByReleaseDate = context.Albums.OrderBy(album => album.ReleaseDate);
+            foreach (var album in albumsByReleaseDate)
+            {
+                Console.WriteLine($"{album.Title} was released on {album.ReleaseDate.ToString("MM/dd/yyyy")}");
+            }
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            Console.ReadLine();
+            Console.Clear();
         }
+
         static void ViewAllBandsSigned()
         {
 
@@ -346,10 +376,10 @@ namespace RhythmsGonnaGetYou
                         ViewAllBands();
                         break;
                     case "7":
-                        // View all albums by a band
+                        ViewAllAlbumsFromBand();
                         break;
                     case "8":
-                        // View all albums by release date
+                        ViewAllAlbumsByReleaseDate();
                         break;
                     case "9":
                         // View all bands that are signed
