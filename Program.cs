@@ -25,7 +25,6 @@ namespace RhythmsGonnaGetYou
 
 
 
-
         static void AddBand()
         {
             Console.Clear();
@@ -226,14 +225,13 @@ namespace RhythmsGonnaGetYou
         {
             Console.Clear();
             var context = new RhythmsContext();
-            Console.WriteLine("");
-            Console.WriteLine("Viewing albums from specified band");
-            Console.WriteLine("");
+            Console.WriteLine("\nViewing albums from specified band\n");
 
             var whatband = PromptForString("What band would you like to see albums from?");
             var albumsFromBand = context.Bands.FirstOrDefault(band => band.Name == whatband);
             var albumName = context.Albums.Include(album => album.Band).Where(album => album.Band == albumsFromBand);
 
+            Console.WriteLine($"\n\nAlbums by {whatband}: ");
             foreach (var album in albumName)
             {
                 Console.WriteLine(album.Title);
@@ -262,11 +260,33 @@ namespace RhythmsGonnaGetYou
 
         static void ViewAllBandsSigned()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
 
+            var signedBands = context.Bands.Where(band => band.IsSigned == true);
+            foreach (var band in signedBands)
+            {
+                Console.WriteLine($"{band.Name}");
+            }
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            Console.ReadLine();
+            Console.Clear();
         }
+
+
         static void ViewAllBandsNotSigned()
         {
+            Console.Clear();
+            var context = new RhythmsContext();
 
+            var signedBands = context.Bands.Where(band => band.IsSigned == false);
+            foreach (var band in signedBands)
+            {
+                Console.WriteLine($"{band.Name}");
+            }
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Menu Option Methods etc. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -382,10 +402,10 @@ namespace RhythmsGonnaGetYou
                         ViewAllAlbumsByReleaseDate();
                         break;
                     case "9":
-                        // View all bands that are signed
+                        ViewAllBandsSigned();
                         break;
                     case "10":
-                        // View all bands that are NOT signed
+                        ViewAllBandsNotSigned();
                         break;
                     case "Q":
                         keepGoing = false;
