@@ -51,6 +51,11 @@ namespace RhythmsGonnaGetYou
 
             context.Bands.Add(newBand);
             context.SaveChanges();
+
+            Console.WriteLine($"\n {newBand.Name} Added to database\n\n");
+            Console.WriteLine("\nPress ENTER to quit and return to main menu: ");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         static void AddAlbum()
@@ -70,7 +75,7 @@ namespace RhythmsGonnaGetYou
             var newAlbumReleaseDate = Console.ReadLine();
             newAlbum.ReleaseDate = DateTime.Parse(newAlbumReleaseDate);
 
-            var selectingBand = true;
+            bool selectingBand = true;
             var bandForAlbum = new Band();
             while (selectingBand)
             {
@@ -305,7 +310,7 @@ namespace RhythmsGonnaGetYou
             var userInput = PromptForString(prompt);
 
             int inputAsInteger;
-            var isThisGoodInput = int.TryParse(userInput, out inputAsInteger);
+            bool isThisGoodInput = int.TryParse(userInput, out inputAsInteger);
 
             if (isThisGoodInput)
             {
@@ -413,6 +418,7 @@ namespace RhythmsGonnaGetYou
 
                     default:
                         Console.Clear();
+                        // counter = counter + 1;
                         counter += 1;
                         if (counter > 3)
                         {

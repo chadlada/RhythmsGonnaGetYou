@@ -2,7 +2,7 @@
 -- 2nd) pgcli RecordDatabase
 -- 3rd) Create Table > Albums (Include BandId (foreign) column)
 -- 5th) Create Table > Bands
--- 4th) Create Table > Songs (Include BandId (foreign) column)
+-- 4th) Create Table > Songs (Include AlbumId (foreign) column)
 
 -- Albums Table
 Create Table "Albums" (
@@ -107,14 +107,14 @@ UPDATE "Albums" SET "BandId" = 4 WHERE "Id" IN (4);
 UPDATE "Albums" SET "BandId" = 5 WHERE "Id" IN (5);
 UPDATE "Albums" SET "BandId" = 6 WHERE "Id" IN (6);
 
-UPDATE "Songs" SET "AlbumId" = 2 WHERE "Id" IN (2);
-UPDATE "Songs" SET "AlbumId" = 3 WHERE "Id" IN (3);
-UPDATE "Songs" SET "AlbumId" = 4 WHERE "Id" IN (4);
-UPDATE "Songs" SET "AlbumId" = 5 WHERE "Id" IN (5);
-UPDATE "Songs" SET "AlbumId" = 6 WHERE "Id" IN (6);
--- Isn't allowing update to this last Song
--- insert or update on table "Songs" violates foreign key constraint "Songs_AlbumId_fkey"
-UPDATE "Songs" SET "AlbumId" = 7 WHERE "Id" IN (7);
+
+UPDATE "Songs" SET "AlbumId" = 1 WHERE "Id" IN (2);
+UPDATE "Songs" SET "AlbumId" = 2 WHERE "Id" IN (3);
+UPDATE "Songs" SET "AlbumId" = 3 WHERE "Id" IN (4);
+UPDATE "Songs" SET "AlbumId" = 4 WHERE "Id" IN (5);
+UPDATE "Songs" SET "AlbumId" = 6 WHERE "Id" IN (7);
+
+
 
 -- Let a band go (update isSigned to false)
 update "Bands"
@@ -135,7 +135,7 @@ WHERE "Bands"."Name" = 'Dave Matthews Band';
 
 -- View all albums ordered by ReleaseDate
 Select * From "Albums"
-ordered by "ReleaseDate";
+order by "ReleaseDate";
 
 -- View all bands that are signed
 Select * From "Bands"
